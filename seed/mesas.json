@@ -1,0 +1,17 @@
+[
+  {
+    "capacidad": 4,
+    "estado": "disponible",
+    "ubicacion": "Terraza"
+  },
+  {
+    "capacidad": 2,
+    "estado": "ocupada",
+    "ubicacion": "Barra"
+  },
+  {
+    "capacidad": 6,
+    "estado": "disponible",
+    "ubicacion": "Zona VIP"
+  }
+]

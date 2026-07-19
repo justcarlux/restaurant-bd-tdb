@@ -1,0 +1,20 @@
+[
+  {
+    "nombre": "Arepa",
+    "descripcion": "Masa redonda y aplanada, hecha a base de harina de maíz precocida, agua y sal.",
+    "precio": 3500,
+    "categoria": "entrada"
+  },
+  {
+    "nombre": "Jugo de Durazno",
+    "descripcion": "Bebida dulce y refrescante hecha a partir de la pulpa de la fruta.",
+    "precio": 1000,
+    "categoria": "bebida"
+  },
+  {
+    "nombre": "Torta Tres Leches",
+    "descripcion": "Mezcla de leche evaporada, leche condensada y crema de leche, coronada con un brillante merengue italiano y un toque de canela espolvoreada.",
+    "precio": 5500,
+    "categoria": "postre"
+  }
+]

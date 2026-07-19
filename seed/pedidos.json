@@ -1,0 +1,9 @@
+[
+  {
+    "tipo_pedido": "mesa",
+    "estado_orden": "recibido",
+    "id_mesa": 1,
+    "cedula_cliente": "39384591",
+    "direccion_envio": null
+  }
+]
