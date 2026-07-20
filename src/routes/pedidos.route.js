@@ -16,15 +16,54 @@ router.get("/:ticket", async (req, res) => {
     return;
   }
 
-  const result = await postgresPool.query("SELECT * FROM pedido WHERE num_ticket = $1", [
-    ticketNumber
-  ]);
+  const result = await postgresPool.query(
+    `SELECT
+        pedido.num_ticket,
+        pedido.tipo_pedido,
+        pedido.estado_orden,
+        pedido.id_mesa,
+        pedido.cedula_cliente,
+        pedido.direccion_envio,
+        detalle_pedido.id_plato,
+        detalle_pedido.cantidad,
+        detalle_pedido.subtotal
+     FROM pedido
+     LEFT JOIN detalle_pedido ON pedido.num_ticket = detalle_pedido.num_ticket
+     WHERE pedido.num_ticket = $1`,
+    [ticketNumber]
+  );
+
   if (result.rows.length <= 0) {
     res.status(404).send({ message: "Pedido no encontrado" });
     return;
   }
 
-  res.send(result.rows[0]);
+  const {
+    num_ticket,
+    tipo_pedido,
+    estado_orden,
+    id_mesa,
+    cedula_cliente,
+    direccion_envio
+  } = result.rows[0];
+
+  const pedido = {
+    num_ticket,
+    tipo_pedido,
+    estado_orden,
+    id_mesa,
+    cedula_cliente,
+    direccion_envio,
+    detalles: result.rows
+      .filter(row => row.id_plato !== null)
+      .map(row => ({
+        id_plato: row.id_plato,
+        cantidad: row.cantidad,
+        subtotal: row.subtotal
+      }))
+  };
+
+  res.send(pedido);
 });
 
 router.post(
