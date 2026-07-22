@@ -6,11 +6,11 @@ const indexRouter = require("./routes/index.route");
 const platosRouter = require("./routes/platos.route");
 const mesasRouter = require("./routes/mesas.route");
 const pedidosRouter = require("./routes/pedidos.route");
-
-const version = "v1";
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./swagger");
 
 function route(segment) {
-  return `/api/${version}${segment}`;
+  return `/api/v1${segment}`;
 }
 
 class App {
@@ -40,18 +40,16 @@ class App {
   }
 
   registerMiddlewares() {
-    this.app
-      .use(this.loggerMiddleware)
-      .use(this.authorizationMiddleware)
-      .use(express.json());
+    this.app.use(this.loggerMiddleware).use(express.json());
   }
 
   registerRoutes() {
     this.app
-      .use(route("/"), indexRouter)
-      .use(route("/platos"), platosRouter)
-      .use(route("/mesas"), mesasRouter)
-      .use(route("/pedidos"), pedidosRouter);
+      .use("/swagger/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+      .use(route("/"), this.authorizationMiddleware, indexRouter)
+      .use(route("/platos"), this.authorizationMiddleware, platosRouter)
+      .use(route("/mesas"), this.authorizationMiddleware, mesasRouter)
+      .use(route("/pedidos"), this.authorizationMiddleware, pedidosRouter);
   }
 
   async bootstrap() {
